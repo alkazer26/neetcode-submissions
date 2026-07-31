@@ -1,0 +1,20 @@
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        freq = {}
+
+        for n in nums:
+            freq[n] = freq.get(n, 0) + 1
+        
+        freq_array = [[] for _ in range(len(nums) + 1)] 
+
+        for key in freq.keys():
+            frequency = freq[key]
+            freq_array[frequency].append(key)
+        
+        out = []
+
+        for i in range(len(freq_array) - 1, -1, -1):
+            for num in freq_array[i]:
+                out.append(num)
+                if len(out) == k:
+                    return out
