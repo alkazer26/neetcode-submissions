@@ -1,0 +1,43 @@
+class Solution:
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        freq = {}
+        for task in tasks:
+            freq[task] = freq.get(task, 0) + 1
+        
+        heap = [-v for v in freq.values()] # max heap, with largest frequency at the top
+        heapq.heapify(heap)
+        aux = deque([])
+
+        t = 1
+        n_cycles = 0
+
+        while heap or aux:
+          
+            if aux and aux[0][1] <= t: # if we can "use" an element from the deque
+                val, time = aux.popleft()
+                heapq.heappush(heap, val)
+
+            if heap:
+                val = heapq.heappop(heap)
+
+                if val + 1 != 0:
+                    aux.append((val + 1, t + n + 1))
+
+            n_cycles += 1
+            
+            t += 1
+        
+        return n_cycles
+
+                
+        
+
+
+
+
+
+
+        heap = []
+        aux = deque([])
+
+
